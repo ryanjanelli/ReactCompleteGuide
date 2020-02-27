@@ -35,12 +35,20 @@ class App extends Component {
   }
 
   render() {
+    const buttonStyle = {
+      backgroundColor: 'white',
+      font: 'inherit',
+      border: '1px solid blue',
+      padding: '8px',
+      cursor: 'pointer'
+    }
     return (
       <div className='App'>
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
         {/* the below onClick is less efficient than the .bind(this, arg) technique */}
-        <button onClick={() => this.switchNameHandler('Ryebreadington')}>Switch Name</button>
+        <button style={buttonStyle}
+        onClick={() => this.switchNameHandler('Ryebreadington')}>Switch Name</button>
         <Person
           name={this.state.persons[0].name}
           age={this.state.persons[0].age}
