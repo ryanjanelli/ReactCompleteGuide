@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import './App.css';
-import UserInput from './User/userInput';
-import UserOutput from './User/userOutput';
+import UserInput from './UserInput/userInput';
+import UserOutput from './UserOutput/userOutput';
 
 class App extends Component {
   state = {
     username: 'RyeBread'
   };
 
-  usernameHandler = (input) => {
+  usernameChangedHandler = (input) => {
     this.setState({
       username: input.target.value
     })
@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <UserInput username={this.state.username} inputChanged={this.usernameHandler}/>
+        <UserInput username={this.state.username} inputChanged={this.usernameChangedHandler}/>
         <UserOutput username={this.state.username} />
         <UserOutput username={this.state.username} />
         <UserOutput username={this.state.username} />
