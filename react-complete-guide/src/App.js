@@ -9,10 +9,11 @@ class App extends Component {
       { name: 'Mike', age: 29 },
       { name: 'Sean', age: 30 }
     ],
-    derp: 'derp'
+    derp: 'derp',
+    showPersons: false
   };
 
-  switchNameHandler = (newName) => {
+  switchNameHandler = newName => {
     // console.log('Was clicked');
     // DO NOT CHANGE STATE LIKE THIS --- this.state.persons[0].name = 'Ryebreadington' ---
     this.setState({
@@ -24,15 +25,20 @@ class App extends Component {
     });
   };
 
-  nameChangedHandler = (event) => {
+  nameChangedHandler = event => {
     this.setState({
       persons: [
         { name: 'Ryan', age: 28 },
         { name: event.target.value, age: 29 },
         { name: 'Sean', age: 30 }
       ]
-    })
-  }
+    });
+  };
+
+  togglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({showPersons: !doesShow})
+  };
 
   render() {
     const buttonStyle = {
@@ -41,30 +47,35 @@ class App extends Component {
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer'
-    }
+    };
     return (
       <div className='App'>
         <h1>Hi, I'm a React App</h1>
         <p>This is really working!</p>
         {/* the below onClick is less efficient than the .bind(this, arg) technique */}
-        <button style={buttonStyle}
-        onClick={() => this.switchNameHandler('Ryebreadington')}>Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-        />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          clickRef={this.switchNameHandler.bind(this, 'Michaelalala')}
-          changed={this.nameChangedHandler} 
-        >
-          My Hobbies: Rock Climbing
-        </Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}
-        />
+        <button style={buttonStyle} onClick={this.togglePersonsHandler}>
+          Toggle Persons
+        </button>
+        {this.state.showPersons ? (
+          <div>
+            <Person
+              name={this.state.persons[0].name}
+              age={this.state.persons[0].age}
+            />
+            <Person
+              name={this.state.persons[1].name}
+              age={this.state.persons[1].age}
+              clickRef={this.switchNameHandler.bind(this, 'Michaelalala')}
+              changed={this.nameChangedHandler}
+            >
+              My Hobbies: Rock Climbing
+            </Person>
+            <Person
+              name={this.state.persons[2].name}
+              age={this.state.persons[2].age}
+            />
+          </div>
+        ) : null}
       </div>
     );
     // the below code is equivalent to the above code. Clearly less efficient.
