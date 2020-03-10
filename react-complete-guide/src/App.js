@@ -48,16 +48,12 @@ class App extends Component {
       padding: '8px',
       cursor: 'pointer'
     };
-    return (
-      <div className='App'>
-        <h1>Hi, I'm a React App</h1>
-        <p>This is really working!</p>
-        {/* the below onClick is less efficient than the .bind(this, arg) technique */}
-        <button style={buttonStyle} onClick={this.togglePersonsHandler}>
-          Toggle Persons
-        </button>
-        {this.state.showPersons ? (
-          <div>
+
+    let persons = null; 
+
+    if (this.state.showPersons) {
+      persons = (
+        <div>
             <Person
               name={this.state.persons[0].name}
               age={this.state.persons[0].age}
@@ -75,7 +71,18 @@ class App extends Component {
               age={this.state.persons[2].age}
             />
           </div>
-        ) : null}
+      );
+    }
+
+    return (
+      <div className='App'>
+        <h1>Hi, I'm a React App</h1>
+        <p>This is really working!</p>
+        {/* the below onClick is less efficient than the .bind(this, arg) technique */}
+        <button style={buttonStyle} onClick={this.togglePersonsHandler}>
+          Toggle Persons
+        </button>
+        {persons}  
       </div>
     );
     // the below code is equivalent to the above code. Clearly less efficient.
