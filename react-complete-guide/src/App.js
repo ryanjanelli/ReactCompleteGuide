@@ -13,18 +13,6 @@ class App extends Component {
     showPersons: false
   };
 
-  switchNameHandler = newName => {
-    // console.log('Was clicked');
-    // DO NOT CHANGE STATE LIKE THIS --- this.state.persons[0].name = 'Ryebreadington' ---
-    this.setState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: 'Michael', age: 29 },
-        { name: 'Seannifer', age: 30 }
-      ]
-    });
-  };
-
   nameChangedHandler = event => {
     this.setState({
       persons: [
@@ -35,9 +23,19 @@ class App extends Component {
     });
   };
 
+  deletePersonHandler = personIndex => {
+    // using slice creates a copy of the array so the original is not damaged
+    // const persons = this.state.persons.slice();
+    // using the spread operator is the ES6 approach
+    // ALWAYS UPDATE STATE IN AN IMMUTABLE FASHION
+    const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
+  };
+
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({showPersons: !doesShow})
+    this.setState({ showPersons: !doesShow });
   };
 
   render() {
@@ -49,28 +47,21 @@ class App extends Component {
       cursor: 'pointer'
     };
 
-    let persons = null; 
+    let persons = null;
 
     if (this.state.showPersons) {
       persons = (
         <div>
-            <Person
-              name={this.state.persons[0].name}
-              age={this.state.persons[0].age}
-            />
-            <Person
-              name={this.state.persons[1].name}
-              age={this.state.persons[1].age}
-              clickRef={this.switchNameHandler.bind(this, 'Michaelalala')}
-              changed={this.nameChangedHandler}
-            >
-              My Hobbies: Rock Climbing
-            </Person>
-            <Person
-              name={this.state.persons[2].name}
-              age={this.state.persons[2].age}
-            />
-          </div>
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+              />
+            );
+          })}
+        </div>
       );
     }
 
@@ -82,7 +73,7 @@ class App extends Component {
         <button style={buttonStyle} onClick={this.togglePersonsHandler}>
           Toggle Persons
         </button>
-        {persons}  
+        {persons}
       </div>
     );
     // the below code is equivalent to the above code. Clearly less efficient.
