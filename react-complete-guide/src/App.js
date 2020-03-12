@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium from 'radium';
+import Radium, { StyleRoot } from 'radium';
 
 class App extends Component {
   state = {
@@ -77,7 +77,7 @@ class App extends Component {
                 name={person.name}
                 age={person.age}
                 key={person.id}
-                changed={(event) => this.nameChangedHandler(event, person.id)}
+                changed={event => this.nameChangedHandler(event, person.id)}
               />
             );
           })}
@@ -87,7 +87,7 @@ class App extends Component {
       buttonStyle[':hover'] = {
         backgroundColor: 'salmon',
         color: 'black'
-      }
+      };
     }
 
     const classes = [];
@@ -99,15 +99,17 @@ class App extends Component {
     }
 
     return (
-      <div className='App'>
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working!</p>
-        {/* the below onClick is less efficient than the .bind(this, arg) technique */}
-        <button style={buttonStyle} onClick={this.togglePersonsHandler}>
-          Toggle Persons
-        </button>
-        {persons}
-      </div>
+      <StyleRoot>
+        <div className='App'>
+          <h1>Hi, I'm a React App</h1>
+          <p className={classes.join(' ')}>This is really working!</p>
+          {/* the below onClick is less efficient than the .bind(this, arg) technique */}
+          <button style={buttonStyle} onClick={this.togglePersonsHandler}>
+            Toggle Persons
+          </button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
     // the below code is equivalent to the above code. Clearly less efficient.
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, `Is this working now?`))
