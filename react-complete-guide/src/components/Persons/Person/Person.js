@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './Person.css';
+import Aux from '../../../hoc/Auxiliary'
 
-const person = props => {
-  return (
-    <div className={classes.Person}>
-      <p onClick={props.onClick}>
-        I'm {props.name} and I am {props.age}!
-      </p>
-      <p>{props.children}</p>
-      <input type='text' onChange={props.onChange} value={props.name} />
-    </div>
-  );
-};
+// React.Fragment does the same thing as Aux under the hood
 
-export default person;
+class Person extends Component {
+  render() {
+    console.log('[Person.js] rendering...');
+    return (
+      // <div className={classes.Person}>
+      <Aux>
+        <p onClick={this.props.onClick}>
+          I'm {this.props.name} and I am {this.props.age}!
+        </p>
+        <p>{this.props.children}</p>
+        <input
+          type='text'
+          onChange={this.props.onChange}
+          value={this.props.name}
+          />
+          </Aux>
+      // </div>
+    );
+  }
+}
+
+export default Person;
