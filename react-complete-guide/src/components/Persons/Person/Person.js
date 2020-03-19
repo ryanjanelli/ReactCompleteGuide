@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import classes from './Person.css';
+import PropTypes from 'prop-types';
+
 import Aux from '../../../hoc/Auxiliary';
 import withClass from '../../../hoc/withClass';
+import classes from './Person.css';
 
 // React.Fragment does the same thing as Aux under the hood
 
@@ -11,13 +13,13 @@ class Person extends Component {
     return (
       // <div className={classes.Person}>
       <Aux>
-        <p onClick={this.props.onClick}>
+        <p onClick={this.props.clicked}>
           I'm {this.props.name} and I am {this.props.age}!
         </p>
         <p>{this.props.children}</p>
         <input
           type='text'
-          onChange={this.props.onChange}
+          onChange={this.props.changed}
           value={this.props.name}
           />
           </Aux>
@@ -25,5 +27,14 @@ class Person extends Component {
     );
   }
 }
+
+Person.propTypes = {
+  clicked: PropTypes.func,
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func
+};
+// PropTypes help people unfamiliar with code to pass the correct types to props
+// Will throw errors if improper type is assigned to a certain prop
 
 export default withClass(Person, classes.Person);

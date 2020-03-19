@@ -8,7 +8,7 @@ import Aux from '../hoc/Auxiliary';
 class App extends Component {
   constructor(props) {
     super(props);
-    console.log('[App.js] constructor')
+    console.log('[App.js] constructor');
   }
 
   state = {
@@ -19,11 +19,12 @@ class App extends Component {
     ],
     derp: 'derp',
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0
   };
 
   static getDerivedStateFromProps(props, state) {
-    console.log('[App.js] getDerivedStateFromProps', props)
+    console.log('[App.js] getDerivedStateFromProps', props);
     return state;
   }
 
@@ -61,9 +62,13 @@ class App extends Component {
     const persons = [...this.state.persons];
     persons[personIndex] = person;
 
-    this.setState({
-      persons: persons
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      };
     });
+    // Best practice for updating state that depends on the previous state. MEMORIZE IT.
   };
 
   deletePersonHandler = personIndex => {
@@ -87,23 +92,31 @@ class App extends Component {
 
     if (this.state.showPersons) {
       persons = (
-          <Persons 
+        <Persons
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler}
-          />
+        />
       );
     }
 
     return (
       <Aux>
-        <button onClick={() => {this.setState({ showCockpit: false})}}>Remove Cockpit</button>
-        {this.state.showCockpit ? <Cockpit 
-        title={this.props.appTitle}
-        personsLength={this.state.persons.length}
-        showPersons={this.state.showPersons}
-        clicked={this.togglePersonsHandler}
-        /> : null }
+        <button
+          onClick={() => {
+            this.setState({ showCockpit: false });
+          }}
+        >
+          Remove Cockpit
+        </button>
+        {this.state.showCockpit ? (
+          <Cockpit
+            title={this.props.appTitle}
+            personsLength={this.state.persons.length}
+            showPersons={this.state.showPersons}
+            clicked={this.togglePersonsHandler}
+          />
+        ) : null}
         {persons}
       </Aux>
     );
