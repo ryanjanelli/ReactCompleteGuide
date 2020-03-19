@@ -8,6 +8,18 @@ import classes from './Person.css';
 // React.Fragment does the same thing as Aux under the hood
 
 class Person extends Component {
+  constructor(props) {
+    super(props);
+    this.inputElementRef = React.createRef();
+  }
+
+  componentDidMount() {
+    // this.inputElement.focus();
+    this.inputElementRef.current.focus();
+  }
+
+  // constructer and componentDidMount code above the modern way to set focus
+
   render() {
     console.log('[Person.js] rendering...');
     return (
@@ -18,11 +30,13 @@ class Person extends Component {
         </p>
         <p>{this.props.children}</p>
         <input
+          // ref={(inputEl) => {this.inputElement = inputEl}}
+          ref={this.inputElementRef}
           type='text'
           onChange={this.props.changed}
           value={this.props.name}
-          />
-          </Aux>
+        />
+      </Aux>
       // </div>
     );
   }
