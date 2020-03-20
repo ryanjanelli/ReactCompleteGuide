@@ -14,9 +14,16 @@ class Person extends Component {
     this.inputElementRef = React.createRef();
   }
 
+  static contextType = AuthContext;
+  // the above can only be set up on class based components. CANNOT be used in functional components
+  // recommended method for handling context as it allows access in many locations
+  // examples where it can be used: componentDidMount, inside render(){return JSX code}
+
   componentDidMount() {
     // this.inputElement.focus();
     this.inputElementRef.current.focus();
+    console.log(this.context.authenticated)
+
   }
 
   // constructer and componentDidMount code above the modern way to set focus
@@ -26,9 +33,7 @@ class Person extends Component {
     return (
       // <div className={classes.Person}>
       <Aux>
-        <AuthContext.Consumer>
-        {(context) => context.authenticated ? <p>Authenticated!</p> : <p>Plese log in</p>}
-        </AuthContext.Consumer>
+        {this.context.authenticated ? <p>Authenticated!</p> : <p>Plese log in</p>}
         <p onClick={this.props.clicked}>
           I'm {this.props.name} and I am {this.props.age}!
         </p>
