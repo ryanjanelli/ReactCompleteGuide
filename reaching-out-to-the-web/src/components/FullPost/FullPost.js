@@ -35,7 +35,7 @@ class FullPost extends Component {
       post = (
         <div className='FullPost'>
           <h1>{this.state.loadedPost.title}</h1>
-          {/* <h4>{this.state.loadedPost.author}</h4> */}
+          <h4>Max hc</h4>
           <p>{this.state.loadedPost.body}</p>
           <div className='Edit'>
             <button className='Delete' onClick={this.deletePostHandler}>Delete</button>
